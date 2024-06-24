@@ -24,9 +24,9 @@
     "depcheck": "depcheck .",
     "dev": "./bin/dev.js",
     "start": "./bin/run.js",
-    "build": "tsc",
-    "prepack": "oclif manifest && oclif readme",
-    "postpack": "rm -f oclif.manifest.json",
+    "build": "tsc && oclif manifest && oclif readme",
+    "prepack": "npm run cleas && npm run build",
+    "postpack": "rm oclif.manifest.json",
     "clean": "rm -rf oclif.manifest.json tsconfig.tsbuildinfo dist"
   },
   "dependencies": {

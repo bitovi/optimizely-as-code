@@ -1,0 +1,124 @@
+name: Verify and Publish
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      segment:
+        description: "The version segment to increment: major, minor, patch, or prerelease."
+        required: true
+      preId:
+        description: 'Appended to the prerelease segment. (default: "")'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+      - name: ESLint
+        run: npm run eslint
+      - name: Prettier
+        run: npm run prettier
+      - name: depcheck
+        run: npm run depcheck
+
+      # - name: Test
+      #   run: npm run test
+
+      - name: Build
+        run: |
+          npm run clean
+          npm run build
+
+      - name: Upload publish artifacts
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: publish
+          path: |
+            /dist
+            /oclif.manifest.json
+
+  publish:
+    if: github.event_name == 'workflow_dispatch'
+    needs: verify
+
+    concurrency:
+      group: "publish"
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download publish artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+
+      - name: Determine Tag
+        id: tag
+        shell: bash
+        run: |
+          if [[ ${{ github.event.inputs.segment }} == pre* ]]; then
+            echo "tag=next" >> $GITHUB_OUTPUT
+          else
+            echo "tag=latest" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Increment Version
+        shell: bash
+        run: |
+          git config --local user.email "Workflow: ${{ github.workflow }}[bot]"
+          git config --local user.name "${{ github.workflow }}[bot]@workflow"
+
+          if [[ ${{ github.event.inputs.segment }} == pre* ]]; then
+            if [[ -n "${{ github.event.inputs.preId }}" ]]; then
+              PREID_CMD="--preid ${{ github.event.inputs.preId }}"
+            fi
+          fi
+
+          npm version ${{ github.event.inputs.segment }} $PREID_CMD
+          VERSION="$(cat package.json | jq -r '.version')"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+          git commit --all --message "Publish ${{ github.workflow }} v$VERSION"
+          git tag "v$VERSION"
+
+      - name: Push Tag
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          tags: true
+
+      - name: Publish to NPM Registry
+        uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          access: public
+          tag: ${{ steps.tag.outputs.tag }}
