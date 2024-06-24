@@ -1,15 +1,54 @@
 {
-  "name": "optimizely-pipeline",
+  "name": "optimizely-as-code",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "author": "",
-  "license": "ISC",
+  "type": "module",
+  "license": "MIT",
+  "files": [
+    "/bin",
+    "/dist",
+    "/oclif.manifest.json"
+  ],
+  "bin": {
+    "optimizely-as-code": "./bin/run.js"
+  },
+  "exports": {
+    ".": "./lib/api.js",
+    "./react": "./lib/react.js",
+    "./package.json": "./package.json"
+  },
   "scripts": {
-    "start": "node src/index.js"
+    "typecheck": "tsc --noEmit",
+    "eslint": "eslint .",
+    "prettier": "prettier --check .",
+    "depcheck": "depcheck .",
+    "dev": "./bin/dev.js",
+    "start": "./bin/run.js",
+    "build": "tsc",
+    "prepack": "oclif manifest && oclif readme",
+    "postpack": "rm -f oclif.manifest.json",
+    "clean": "rm -rf oclif.manifest.json tsconfig.tsbuildinfo dist"
   },
   "dependencies": {
-    "deep-equal": "^2.0.5",
-    "request": "^2.88.2"
+    "@oclif/core": "^4.0.6",
+    "@oclif/plugin-help": "^6.2.3"
+  },
+  "devDependencies": {
+    "@bitovi/eslint-config": "^1.8.0",
+    "@types/node": "^20.14.8",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.57.0",
+    "oclif": "^4.13.10",
+    "prettier": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2"
+  },
+  "oclif": {
+    "bin": "optimizely-as-code",
+    "dirname": "optimizely-as-code",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
   }
 }
