@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
-  extends: "@bitovi/eslint-config/node",
-  ignorePatterns: ["dist"],
+  extends: "@bitovi/eslint-config/react",
+  ignorePatterns: ["dist", "*.html"],
   rules: {
     "@typescript-eslint/consistent-type-imports": [
       "error",

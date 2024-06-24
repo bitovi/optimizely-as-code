@@ -1,0 +1,14 @@
+# Environment
+/.env
+/.env.*
+!/.env.example
+
+# Artifacts
+/node_modules/
+/dist/
+
+# Cache and Logs
+npm-debug.*
+*.tsbuildinfo
+.DS_Store
+Thumbs.db

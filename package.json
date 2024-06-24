@@ -13,8 +13,8 @@
     "optimizely-as-code": "./bin/run.js"
   },
   "exports": {
-    ".": "./lib/api.js",
-    "./react": "./lib/react.js",
+    ".": "./dist/api.js",
+    "./react": "./dist/react.js",
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -24,18 +24,21 @@
     "depcheck": "depcheck .",
     "dev": "./bin/dev.js",
     "start": "./bin/run.js",
-    "build": "tsc && oclif manifest && oclif readme",
-    "prepack": "npm run cleas && npm run build",
+    "build": "tsc ; oclif manifest && oclif readme",
+    "prepack": "npm run clean && npm run build",
     "postpack": "rm oclif.manifest.json",
     "clean": "rm -rf oclif.manifest.json tsconfig.tsbuildinfo dist"
   },
   "dependencies": {
     "@oclif/core": "^4.0.6",
-    "@oclif/plugin-help": "^6.2.3"
+    "@oclif/plugin-help": "^6.2.3",
+    "@optimizely/optimizely-sdk": "^5.3.3",
+    "@optimizely/react-sdk": "^3.1.1"
   },
   "devDependencies": {
     "@bitovi/eslint-config": "^1.8.0",
     "@types/node": "^20.14.8",
+    "@types/react": "^18.3.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.57.0",
     "oclif": "^4.13.10",
