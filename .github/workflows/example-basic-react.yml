@@ -42,3 +42,12 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      # Can't do this since we don't have a real account to test against
+      # - name: Sync OptimizelyAsCode
+      #   # A real project should only sync when publishing
+      #   # if: github.event_name == 'workflow_dispatch'
+      #   env:
+      #     OPTIMIZELY_ACCESS_TOKEN: my-optimizely-access-token
+      #     OPTIMIZELY_PROJECT_ID: my-optimizely-project-id
+      #   run: npm run optimizely-as-code

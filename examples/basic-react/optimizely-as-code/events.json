@@ -1,0 +1,8 @@
+[
+  {
+    "category": "other",
+    "description": "Clicking on the Learn More Button",
+    "event_type": "custom",
+    "key": "clickColor"
+  }
+]

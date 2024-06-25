@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "optimizely-as-code": "optimizely-as-code sync",
     "typecheck": "tsc --noEmit",
     "eslint": "eslint .",
     "prettier": "prettier --check .",

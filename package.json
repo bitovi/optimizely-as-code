@@ -31,12 +31,14 @@
   },
   "dependencies": {
     "@oclif/core": "^4.0.6",
-    "@oclif/plugin-help": "^6.2.3",
     "@optimizely/optimizely-sdk": "^5.3.3",
-    "@optimizely/react-sdk": "^3.1.1"
+    "@optimizely/react-sdk": "^3.1.1",
+    "cross-fetch": "^4.0.0",
+    "deep-equal": "^2.2.3"
   },
   "devDependencies": {
     "@bitovi/eslint-config": "^1.8.0",
+    "@types/deep-equal": "^1.0.4",
     "@types/node": "^20.14.8",
     "@types/react": "^18.3.3",
     "depcheck": "^1.4.7",
@@ -50,8 +52,6 @@
     "bin": "optimizely-as-code",
     "dirname": "optimizely-as-code",
     "commands": "./dist/commands",
-    "plugins": [
-      "@oclif/plugin-help"
-    ]
+    "plugins": []
   }
 }
