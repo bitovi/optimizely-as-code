@@ -1,0 +1,53 @@
+name: Example - Basic React
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./examples/basic-react
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Build core
+        working-directory: ./
+        run: |
+          npm ci
+          npm run build
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+      - name: ESLint
+        run: npm run eslint
+      - name: Prettier
+        run: npm run prettier
+      - name: depcheck
+        run: npm run depcheck
+
+      # - name: Test
+      #   run: npm run test
+
+      - name: Build
+        run: npm run build
+
+      # Can't do this since we don't have a real account to test against
+      # - name: Sync OptimizelyAsCode
+      #   # A real project should only sync when publishing
+      #   # if: github.event_name == 'workflow_dispatch'
+      #   env:
+      #     OPTIMIZELY_ACCESS_TOKEN: my-optimizely-access-token
+      #     OPTIMIZELY_PROJECT_ID: my-optimizely-project-id
+      #   run: npm run optimizely-as-code

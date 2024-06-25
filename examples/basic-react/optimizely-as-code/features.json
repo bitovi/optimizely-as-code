@@ -1,0 +1,17 @@
+[
+  {
+    "key": "link_color",
+    "project_id": 19726420380,
+    "variables": [
+      {
+        "default_value": "false",
+        "key": "isOrange",
+        "type": "boolean"
+      }
+    ]
+  },
+  {
+    "key": "demo_feature1",
+    "project_id": 19726420380
+  }
+]

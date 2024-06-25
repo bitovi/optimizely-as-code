@@ -6,7 +6,6 @@
 # Artifacts
 /node_modules/
 /dist/
-/oclif.manifest.json
 
 # Cache and Logs
 npm-debug.*
