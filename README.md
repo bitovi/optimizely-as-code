@@ -4,9 +4,31 @@ optimizely-as-code
 optimizely-as-code
 
 <!-- toc -->
+* [Configuring your project](#configuring-your-project)
 * [Usage in React](#usage-in-react)
 * [CLI Commands](#cli-commands)
 <!-- tocstop -->
+
+# Configuring your project
+
+```shell
+npm install optimizely-as-code
+```
+
+Add to `package.json`
+```json
+{
+  "scripts": {
+    "optimizely-as-code": "optimizely-as-code sync",
+  },
+}
+```
+
+Create `optimizely-as-code/features.json`.
+
+Create `optimizely-as-code/events.json`.
+
+Create `optimizely-as-code/experiments.json`.
 
 # Usage in React
 
