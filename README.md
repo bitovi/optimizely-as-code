@@ -1,7 +1,10 @@
 optimizely-as-code
 ==================
 
-optimizely-as-code
+`optimizely-as-code` avoids missmatches between Optimizely configuration and your deployed React code. It works by:
+
+1. Having your React code define the features it supports.
+2. Providing a script that can update Optimizely to match that definition. You configure the script to run on deployment.
 
 <!-- toc -->
 * [Configuring your project](#configuring-your-project)
